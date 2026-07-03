@@ -1,0 +1,131 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://polyglot-codebase-llm/schemas/bug-annotation.schema.json",
+  "title": "Cross-Language Bug Annotation",
+  "description": "One annotated cross-language bug from Step 1.2. JSONL stream — one of these per line in bugs.jsonl.",
+  "type": "object",
+  "required": [
+    "bug_id",
+    "repo",
+    "language_pair",
+    "pr_url",
+    "pr_number",
+    "merged_at",
+    "title",
+    "category",
+    "rationale",
+    "files_changed",
+    "annotator",
+    "annotated_at",
+    "schema_version"
+  ],
+  "properties": {
+    "bug_id": {
+      "type": "string",
+      "description": "Stable ID: <repo-slug>#<pr-number>, e.g., 'acme/api#1234'"
+    },
+    "repo": {
+      "type": "string",
+      "description": "owner/name"
+    },
+    "language_pair": {
+      "type": "string",
+      "enum": ["java-ts", "python-go"]
+    },
+    "pr_url": { "type": "string", "format": "uri" },
+    "pr_number": { "type": "integer", "minimum": 1 },
+    "merged_at": { "type": "string", "format": "date-time" },
+    "title": { "type": "string" },
+    "body": {
+      "type": ["string", "null"],
+      "description": "PR description; may be null"
+    },
+    "linked_issues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["number", "url"],
+        "properties": {
+          "number": { "type": "integer" },
+          "url": { "type": "string", "format": "uri" },
+          "title": { "type": "string" },
+          "body": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "category": {
+      "type": "string",
+      "enum": ["schema", "coerce", "nil", "serde", "async", "other"],
+      "description": "Primary taxonomy category (see docs/glossary.md)"
+    },
+    "secondary_category": {
+      "type": ["string", "null"],
+      "enum": ["schema", "coerce", "nil", "serde", "async", "other", null],
+      "description": "Optional second-most-applicable category; null if N/A"
+    },
+    "rationale": {
+      "type": "string",
+      "minLength": 20,
+      "description": "1–2 sentences explaining why this is cross-language and why this category"
+    },
+    "files_changed": {
+      "type": "object",
+      "description": "Files changed per language",
+      "required": ["primary_language", "secondary_language"],
+      "properties": {
+        "primary_language": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Files in the first language of the pair (java for java-ts, python for python-go)"
+        },
+        "secondary_language": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Files in the second language (ts, go)"
+        },
+        "schema_files": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Contract files touched (e.g., .proto, openapi.yaml)"
+        },
+        "other": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Files in neither language but touched (config, docs, etc.)"
+        }
+      }
+    },
+    "boundary_kind": {
+      "type": "string",
+      "enum": ["rest", "grpc", "shared-file", "subprocess", "ffi", "other", "unknown"],
+      "description": "Communication style between the two language sides"
+    },
+    "is_confirmed_cross_language": {
+      "type": "boolean",
+      "description": "True if annotator is confident this bug truly requires both languages to manifest"
+    },
+    "annotator": {
+      "type": "string",
+      "description": "Annotator identifier (initials or handle)"
+    },
+    "second_annotator": {
+      "type": ["string", "null"],
+      "description": "Set when a second annotator reviewed (for κ computation)"
+    },
+    "annotator_disagreement": {
+      "type": ["string", "null"],
+      "description": "If second_annotator disagreed, what did they say?"
+    },
+    "annotated_at": { "type": "string", "format": "date-time" },
+    "prompt_version": {
+      "type": ["string", "null"],
+      "description": "If LLM-assisted, which prompt version (e.g., 'bug-classifier-v1')"
+    },
+    "schema_version": {
+      "type": "string",
+      "const": "1.0",
+      "description": "Schema version this record conforms to"
+    }
+  },
+  "additionalProperties": false
+}

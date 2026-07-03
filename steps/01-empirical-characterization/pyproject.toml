@@ -1,0 +1,15 @@
+[project]
+name = "polyglot-codebase-llm-step-01"
+version = "0.1.0"
+description = "Step 1 — Empirical characterization of cross-language bugs in Java+TS and Python+Go polyglot systems"
+requires-python = ">=3.11"
+dependencies = [
+    "requests>=2.32",
+    "pyyaml>=6.0",
+    "jsonschema>=4.21",
+    "python-dotenv>=1.0",
+    "tenacity>=9.0",
+]
+
+[tool.uv]
+package = false

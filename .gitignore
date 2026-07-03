@@ -1,0 +1,45 @@
+# Mined data — keep raw dumps out of git, distribute via Zenodo
+**/data/raw/
+**/data/cache/
+*.jsonl.gz
+*.tar.gz
+*.zip
+
+# Cloned target repositories (mining sub-step clones these for analysis)
+**/repos-cache/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Node / TS (tools we might use to parse TS bugs)
+node_modules/
+dist/
+*.log
+
+# Env / secrets
+.env
+.env.local
+*.secret
+github-token*
+*api-key*
+
+# IDE
+.idea/
+.vscode/
+*.swp
+.DS_Store
+
+# Output that's auto-generated and large
+**/output/runs/
+**/logs/
+
+# Allow: schemas, configs, READMEs, scripts, small annotated samples
+!**/data/samples/
+!**/schemas/

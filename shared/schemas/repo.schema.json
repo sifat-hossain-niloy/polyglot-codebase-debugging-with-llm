@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://polyglot-codebase-llm/schemas/repo.schema.json",
+  "title": "Mined Repository Record",
+  "description": "One candidate polyglot repository identified by Step 1.1. JSONL stream — one of these per line in repos.jsonl.",
+  "type": "object",
+  "required": [
+    "owner",
+    "name",
+    "url",
+    "language_pair",
+    "languages_bytes",
+    "stars",
+    "default_branch",
+    "license",
+    "has_ci",
+    "has_tests",
+    "is_monorepo",
+    "fetched_at"
+  ],
+  "properties": {
+    "owner": { "type": "string", "description": "GitHub owner login" },
+    "name": { "type": "string", "description": "Repo name" },
+    "url": { "type": "string", "format": "uri" },
+    "language_pair": {
+      "type": "string",
+      "enum": ["java-ts", "python-go"],
+      "description": "Which polyglot pair this repo belongs to"
+    },
+    "languages_bytes": {
+      "type": "object",
+      "description": "GitHub /languages API output, language -> bytes",
+      "additionalProperties": { "type": "integer", "minimum": 0 }
+    },
+    "stars": { "type": "integer", "minimum": 0 },
+    "forks": { "type": "integer", "minimum": 0 },
+    "default_branch": { "type": "string" },
+    "license": {
+      "type": ["string", "null"],
+      "description": "SPDX id or null if unlicensed/unknown"
+    },
+    "has_ci": {
+      "type": "boolean",
+      "description": "Detected via .github/workflows/, .circleci/, Jenkinsfile, etc."
+    },
+    "has_tests": {
+      "type": "boolean",
+      "description": "Heuristic: test markers present (pom surefire, package.json test script, *_test.go, etc.)"
+    },
+    "is_monorepo": {
+      "type": "boolean",
+      "description": "Both languages live in the same repo (true) vs paired across orgs (false)"
+    },
+    "is_fork": { "type": "boolean" },
+    "is_archived": { "type": "boolean" },
+    "last_commit_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp of most recent commit on default branch"
+    },
+    "created_at": { "type": "string", "format": "date-time" },
+    "size_kb": { "type": "integer", "minimum": 0 },
+    "topics": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "fetched_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When this record was fetched/refreshed"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Free-form annotator notes; usually empty"
+    }
+  },
+  "additionalProperties": false
+}

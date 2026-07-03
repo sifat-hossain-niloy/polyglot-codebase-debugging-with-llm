@@ -1,0 +1,77 @@
+# GitHub Search query strategy for Sub-step 1.1.
+# See ../README.md for selection criteria.
+# Dates assume today = 2026-06-26. Regenerate if you rerun mining later.
+
+defaults:
+  min_stars: 500
+  pushed_since: "2026-03-28"          # ≥1 commit in last 90 days
+  min_created_before: "2025-12-26"    # repo exists for ≥6 months (post-filter)
+  exclude_archived: true
+  exclude_forks: true
+
+# Repo names / descriptions containing any of these are dropped (post-search).
+exclusion_terms:
+  - tutorial
+  - example
+  - examples
+  - demo
+  - template
+  - templates
+  - starter
+  - boilerplate
+  - playground
+  - learning
+  - course
+  - exercise
+  - workshop
+
+java_ts:
+  # Cast a wide net: queries are OR'd at the result level (deduplicated by repo).
+  # Each query is rate-limited to 30/min on GitHub's Search API.
+  search_queries:
+    # TypeScript-primary repos that mention Java/Spring
+    - "language:TypeScript stars:>=500 pushed:>=2026-03-28 archived:false fork:false topic:spring-boot"
+    - "language:TypeScript stars:>=500 pushed:>=2026-03-28 archived:false fork:false topic:java"
+    - "language:TypeScript stars:>=500 pushed:>=2026-03-28 archived:false fork:false topic:spring"
+    # Java-primary repos that mention TS/React/Angular
+    - "language:Java stars:>=500 pushed:>=2026-03-28 archived:false fork:false topic:typescript"
+    - "language:Java stars:>=500 pushed:>=2026-03-28 archived:false fork:false topic:react"
+    - "language:Java stars:>=500 pushed:>=2026-03-28 archived:false fork:false topic:angular"
+    - "language:Java stars:>=500 pushed:>=2026-03-28 archived:false fork:false topic:nextjs"
+    # Generic full-stack / monorepo signals
+    - "language:Java stars:>=500 pushed:>=2026-03-28 archived:false fork:false topic:fullstack"
+    - "language:TypeScript stars:>=500 pushed:>=2026-03-28 archived:false fork:false topic:fullstack"
+    - "language:Java stars:>=500 pushed:>=2026-03-28 archived:false fork:false topic:monorepo"
+    - "language:Java stars:>=500 pushed:>=2026-03-28 archived:false fork:false topic:webapp"
+    # Broader: depend on /languages enrichment to confirm TypeScript presence
+    - "language:Java stars:>=1500 pushed:>=2026-03-28 archived:false fork:false"
+
+  # Enrichment-stage filters (applied after fetching /languages per candidate)
+  filters:
+    languages_required: ["Java", "TypeScript"]
+    min_bytes_per_required_language: 10000        # at least 10 KB of each
+    min_fraction_per_required_language: 0.05      # at least 5% of total bytes
+
+python_go:
+  search_queries:
+    # Go-primary repos that mention Python or gRPC
+    - "language:Go stars:>=500 pushed:>=2026-03-28 archived:false fork:false topic:python"
+    - "language:Go stars:>=500 pushed:>=2026-03-28 archived:false fork:false topic:grpc"
+    - "language:Go stars:>=500 pushed:>=2026-03-28 archived:false fork:false topic:microservices"
+    - "language:Go stars:>=500 pushed:>=2026-03-28 archived:false fork:false topic:protobuf"
+    - "language:Go stars:>=500 pushed:>=2026-03-28 archived:false fork:false topic:machine-learning"
+    - "language:Go stars:>=500 pushed:>=2026-03-28 archived:false fork:false topic:kubernetes"
+    - "language:Go stars:>=500 pushed:>=2026-03-28 archived:false fork:false topic:cloud-native"
+    # Python-primary repos that mention Go or gRPC
+    - "language:Python stars:>=500 pushed:>=2026-03-28 archived:false fork:false topic:go"
+    - "language:Python stars:>=500 pushed:>=2026-03-28 archived:false fork:false topic:grpc"
+    - "language:Python stars:>=500 pushed:>=2026-03-28 archived:false fork:false topic:microservices"
+    - "language:Python stars:>=500 pushed:>=2026-03-28 archived:false fork:false topic:kubernetes"
+    - "language:Python stars:>=500 pushed:>=2026-03-28 archived:false fork:false topic:cloud-native"
+    # Broader: depend on /languages enrichment to confirm both languages
+    - "language:Go stars:>=2000 pushed:>=2026-03-28 archived:false fork:false"
+
+  filters:
+    languages_required: ["Python", "Go"]
+    min_bytes_per_required_language: 5000         # 5 KB minimum (lower than java-ts)
+    min_fraction_per_required_language: 0.02      # 2% — python-go monorepos are asymmetric
