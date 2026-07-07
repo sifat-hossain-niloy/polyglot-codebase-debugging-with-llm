@@ -12,7 +12,7 @@
 | Sub-step | State | Last updated | Owner |
 |----------|-------|--------------|-------|
 | [01-github-mining](01-github-mining/STATUS.md) | 🟢 done | 2026-06-27 | Sifat |
-| [02-bug-extraction](02-bug-extraction/STATUS.md) | 🟡 batch 1 done (12/100 bugs) | 2026-07-08 | Sifat |
+| [02-bug-extraction](02-bug-extraction/STATUS.md) | 🟡 batches 1+2 done (19/100 bugs) | 2026-07-08 | Sifat |
 | [03-baseline-evaluation](03-baseline-evaluation/STATUS.md) | 🔴 blocked on 02 hitting 20+ bugs | 2026-06-23 | unassigned |
 | [04-workshop-paper](04-workshop-paper/STATUS.md) | ⚪ can start writing methodology + corpus paragraphs | 2026-06-23 | unassigned |
 

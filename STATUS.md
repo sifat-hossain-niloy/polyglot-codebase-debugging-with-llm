@@ -11,7 +11,7 @@
 
 | Step | Status | Output | Notes |
 |------|--------|--------|-------|
-| 01 — Empirical Characterization | 🟡 1.1 done; 1.2 batch 1 done (12/100 bugs) | FSE paper §3 evidence | 145 repos ✓, 12 bugs ✓ |
+| 01 — Empirical Characterization | 🟡 1.1 done; 1.2 batches 1+2 done (19/100 bugs) | FSE paper §3 evidence | 145 repos ✓, 19 bugs ✓ |
 | 02 — Call Graph & Schema | ⚪ Not started | Cross-language SCIP graph + schema parser | Blocked on Step 1 dataset |
 | 03 — Dual-Agent System | ⚪ Not started | Cross-language localize-then-edit agent | Blocked on Step 2 |
 | 04 — Evaluation & Ablations | ⚪ Not started | Ablation results + human eval | Blocked on Step 3 |

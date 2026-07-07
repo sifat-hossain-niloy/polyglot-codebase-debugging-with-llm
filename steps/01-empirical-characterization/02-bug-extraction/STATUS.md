@@ -18,22 +18,29 @@
 - **`shared/prompts/bug-classifier-v1.md`** — versioned LLM classification prompt.
 - **Fetch complete:** 1,206 raw cross-language PRs (579 java-ts + 627 python-go) from 145 repos.
 - **Triage complete:** 668 candidates (330 java-ts + 338 python-go) after keyword + files filter. Rejection reasons dominated by "no bug keyword" (docs/refactors/features) and a small tail of massive-diff PRs.
-- **Batch 1 classified manually:** 50 top-scored candidates read in-conversation → **12 confirmed cross-language bugs (24%), 38 skipped.**
-- **`data/processed/bugs.jsonl`** — 12 schema-validated annotations (7 java-ts + 5 python-go).
-- **`data/processed/skipped.jsonl`** — 38 skips with reasons.
-- **`output/bug-stats.md`** — paper-ready summary. Notable patterns already visible:
-  - `schema` bugs cluster at REST + gRPC (5/6 total)
-  - `coerce` bugs cluster at FFI (2/3 total)
-  - `serde` and `other` categories still empty — need more sampling
-  - Skip reasons: 17 features / 11 not-a-bug / 7 not-cross-language / 2 insufficient-context
+- **Batch 1 classified manually:** 50 top-scored candidates → 12 confirmed (24%).
+- **Batch 2 classified manually:** 50 candidates from the boundary_hint=unknown pool → 7 confirmed (14%). Lower yield expected — this pool has no explicit schema/rest/grpc/ffi signals.
+- **`data/processed/bugs.jsonl`** — **19 schema-validated annotations (10 java-ts + 9 python-go).**
+- **`data/processed/skipped.jsonl`** — 81 skips with reasons.
+- **`output/bug-stats.md`** — paper-ready summary. Cumulative patterns after 100 PRs reviewed:
+  - `schema` × REST = 4 bugs (dominant pattern for contract-drift class)
+  - `schema` × gRPC = 2 bugs (proto-contract drift)
+  - `coerce` × FFI = 3 bugs (dominant for type-coercion class)
+  - `nil`: 4 bugs across REST, gRPC, and FFI — nullability is the most boundary-agnostic failure mode
+  - `serde` × other = 1 bug (shared string-format parsing)
+  - `async` bugs at FFI (2) and other (1) — none at REST/gRPC yet
+  - Boundary count: FFI 8, REST 5, gRPC 4, other 2
+  - Skip reasons: 31 features / 25 not-cross-language / 21 not-a-bug / 3 insufficient / 1 feature+integration
 
 ## What's next
 
-**To reach the 100-bug Phase-A target, we need ~4 more batches like this one.** Options in priority order:
+**Progress: 19/100 bugs after 2 batches (2 sessions). Extrapolating at ~17% yield → we need ~5 more batches to hit 100 confirmed bugs.**
 
-1. **Batch 2 in a follow-up session (recommended immediate next step).** Sample the next 50 candidates that didn't make batch 1's top-signal cut — likely a lower-yield mix (~15% confirmed), so plan for 50-per-batch × 3 more batches to hit 100 confirmed bugs. Total effort: 3 focused Claude sessions.
-2. **API-driven bulk classification.** Add `ANTHROPIC_API_KEY` to `.env`, then `uv add anthropic` and run `classify_prs.py --limit 500`. LLM proposes labels → human review confirms. ~$5–20 API cost for the full 668. Faster but requires human verification loop on paper claims.
-3. **Fetch diffs for higher-confidence classification.** Current pass uses title/body/files only; some skips flagged as "insufficient context" would resolve with the actual diff. Add a `--fetch-diff` mode to fetch_prs.py.
+Batch 3 next: sample 50 more candidates that weren't in batches 1 or 2. Repos not yet sampled: ~90+ (candidates.jsonl has repos from 400+ that neither batch touched). Expected yield: 10–15% (further into the tail; the low-signal pool is where genuine cross-lang bugs are increasingly rare).
+
+Alternative paths still available (as before):
+- **API-driven bulk classification.** Add `ANTHROPIC_API_KEY` to `.env`, run `classify_prs.py --limit 568`. LLM proposes labels → human verifies. ~$5–20.
+- **Fetch diffs for higher-confidence classification.** Current pass uses title/body/files only. `--fetch-diff` would resolve the "insufficient context" skips.
 
 ## Open questions
 
@@ -48,9 +55,9 @@
 - `taxonomy.md`, `annotation-guide.md`
 - `data/raw/prs-<pair>-2026-07-08.jsonl` — 1,206 raw PRs (gitignored)
 - `data/processed/candidates-2026-07-08.jsonl` — 668 triaged candidates (gitignored)
-- `data/processed/batch-1-selection.jsonl` — 50-PR stratified sample
-- `data/processed/bugs.jsonl` — **12 annotated cross-language bugs** ✓ schema-validated
-- `data/processed/skipped.jsonl` — 38 skips
+- `data/processed/batch-1-selection.jsonl`, `data/processed/batch-2-selection.jsonl` — sampled batches
+- `data/processed/bugs.jsonl` — **19 annotated cross-language bugs** ✓ schema-validated
+- `data/processed/skipped.jsonl` — 81 skips
 - `output/bug-stats.md` — paper-ready summary
 
 ## Open questions
