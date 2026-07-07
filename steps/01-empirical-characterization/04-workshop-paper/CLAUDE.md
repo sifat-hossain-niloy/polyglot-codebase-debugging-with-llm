@@ -1,53 +1,52 @@
-# Agent Instructions — Sub-step 1.4 (Workshop Paper)
+# Agent Instructions — Sub-step 1.4 (FSE Paper Empirical-Study Skeleton)
 
-## When to work on this
+> **Scope change 2026-06-27:** no longer a standalone workshop paper. Now owns §3 (Empirical Study) of the FSE 2027 Research Paper due 2026-10-02.
 
-This sub-step runs **in parallel** with 1.2 and 1.3, not after. Each time new evidence lands, update the paper draft.
+## Your job in this sub-step
 
-Concretely:
+Draft `sections/03-empirical-study.md` — the ~4-page Empirical Study section of the FSE full paper. Fill in as evidence lands from sub-steps 1.1–1.3.
 
-- After 1.1 finishes → write the corpus/methodology section based on real numbers.
-- After 1.2 has 50 bugs → write the taxonomy and prevalence section.
-- After 1.3 has the first baseline run → write the headline empirical section.
-- After all three are done → polish, write the agenda, write the intro/conclusion.
+## Working order
 
-## Concrete first session
+This sub-step runs **in parallel** with 1.2 and 1.3. Each time new evidence lands, update the draft.
 
-Before any data exists:
+Concrete first-session actions:
 
-1. **Read [outline.md](outline.md).** Validate the section structure.
-2. **Pick a venue.** Look up actual deadlines for ICSE NIER 2027 and 2 co-located workshops. Record in `STATUS.md`. Confirm format (page limit, template, references-count rule).
-3. **Set up the LaTeX (or MD) skeleton.** One file per section under `sections/`. Pre-fill outlines as bullet points.
-4. **Update [STATUS.md](STATUS.md).** Note: at this stage paper is in "skeleton only" state.
+1. **Verify the FSE 2027 CfP** — page limit, double-blind rules, artifact-badge process. Record in [STATUS.md](STATUS.md). Do NOT start writing until this is confirmed.
+2. **Set up the section skeleton.** Create `sections/03-empirical-study.md` with the sub-section headers from [outline.md](outline.md). Fill bullet points, not prose.
+3. **Add the corpus/methodology paragraph.** 1.1 is done — write it now using the numbers from `../01-github-mining/output/repo-summary.md`.
+4. **Update [STATUS.md](STATUS.md)** to note "skeleton + methodology paragraph written; awaiting taxonomy and baselines."
 
-Once data starts flowing:
+Later sessions (as 1.2/1.3 produce evidence):
 
-5. **Write findings as they land.** Don't wait for "complete data" — early drafts catch problems early.
-6. **Track every number in `output/key-numbers.md`.** Every quantitative claim in the paper needs a one-line source ("from `02-bug-extraction/data/processed/bugs.jsonl` filtered to category=schema and lang_pair=java-ts").
-7. **Generate figures from scripts.** No hand-edited charts. `figures/<name>.py` produces `figures/<name>.pdf`. Re-runnable end-to-end.
+5. Add taxonomy prevalence numbers + example bugs (1.2 output).
+6. Add baseline-agent failure-mode analysis (1.3 output).
+7. Generate figures from scripts under `figures/` — no hand-edited charts, everything reproducible.
+8. Populate `output/key-numbers.md` — every quantitative claim in the section with its source.
 
-## Style rules for this paper
+## Style rules
 
-- **First person plural** for our work. Past tense for what we did, present for what we claim.
-- **Don't reference iSWE-Agent's arXiv paper if it hasn't published.** Cite the IBM blog + Multi-SWE-bench README and date them carefully. If their arXiv lands before submission, swap citations.
-- **Anchor every claim to evidence.** Avoid sentences like "many bugs are schema mismatches." Replace with "36% (n=14/39) of Java+TS bugs in our corpus are schema mismatches."
-- **Cite the plan section we're acting on** in commits, not in the paper text.
+- **First person plural** for our work, past tense for what we did, present for what we claim.
+- **Every claim needs a citation or a number.** "Many bugs are schema mismatches" → "36% (n=14/39) of Java+TS bugs are schema mismatches."
+- **Anonymized examples if the venue is double-blind.** Strip repo URLs; use "we studied a popular Java+TS full-stack application" style until submission time.
+- **Cite the research plan section** in commits, not in the paper. Commits like `step-1.4: draft empirical-study §3.2`.
+- **Never mention Claude, AI assistance, or Co-Authored-By trailers anywhere** — commits, code comments, paper text.
 
-## What NOT to include
+## What NOT to include in this section
 
-- The full agent system. That's Phase C. Workshop paper is **characterization + agenda**, not "we built X."
-- Speculative results. If the baseline run isn't done, don't predict the number — write the methodology and leave the result placeholder until 1.3 finishes.
-- Cherry-picked anecdotes. Every example bug we feature in the paper must be a typical instance of its category, not the most dramatic.
+- The tool. That goes in §4–§7, owned by Steps 2–4.
+- Speculative results. If 1.3 baseline isn't done yet, write the methodology only; leave placeholder `[TABLE — baseline numbers pending]`.
+- Cherry-picked anecdotes. Every example bug we feature must be a typical instance of its category, not the most dramatic.
 
-## Submission checklist (run before user reviews)
+## Coordination rules
 
-- Anonymized for double-blind if the venue requires it.
-- Page limit respected (count words including figures).
-- All cited works exist (no hallucinated citations — verify URLs).
-- All numbers in the paper appear in `output/key-numbers.md`.
-- Data + code links point to live repositories (not "TBA").
-- Threats to validity covers: mining bias, annotator subjectivity, agent / model version drift, license selection bias.
+- Every Friday: sync `sections/03-empirical-study.md` with the latest artifacts from 1.1/1.2/1.3. If numbers have changed, update the section AND `output/key-numbers.md` in the same edit.
+- If the section reaches its budget (~4 pages) with room to spare, DO NOT expand into background material — that's §2, written by the sprint. Save the space for evidence.
 
 ## Definition of done
 
-🟢 means: draft is complete, internally reviewed by user, ready for submission. Update [STATUS.md](STATUS.md) and the global [STATUS.md](../../../STATUS.md).
+🟢 means:
+- `sections/03-empirical-study.md` is complete and internally reviewed by the user.
+- Every claim in it appears in `output/key-numbers.md` with a data-source link.
+- All figures generated by re-runnable scripts.
+- Ready to concatenate into the full FSE draft at the start of Week 12.

@@ -1,113 +1,75 @@
-# Paper Outline — Workshop Short Paper
+# FSE Paper §3 Empirical Study — Outline
 
-**Working title:** *Towards Cross-Language Debugging Agents for Java+TypeScript Polyglot Systems — A Characterization and Research Agenda*
+> **Scope change 2026-06-27:** originally a standalone workshop paper outline. Now the outline for §3 of the FSE 2027 Research Paper.
 
-**Target venue:** ICSE 2027 NIER (preferred) or co-located workshop (AIware, InteNSE, LLM4Code).
+**Full paper working title:** *Cross-Language Localize-then-Edit: An Agentic Debugging System for Java+TypeScript and Python+Go Polyglot Codebases.*
 
-**Format:** 4 pages + references (verify exact rules per venue at draft-finalization time).
-
----
-
-## 1. Introduction (~0.75 page)
-
-**Opening:** Modern enterprise software is polyglot. A typical production system runs a Java backend, a TypeScript frontend, Python microservices, and Go infrastructure — all communicating over REST or gRPC.
-
-**Gap:** LLM debugging agents achieve ~70–80% on Python-only SWE-bench but drop to 10–33% on multi-language benchmarks. No prior work has measured agent performance specifically on bugs that *require* cross-language reasoning.
-
-**Contribution (3 bullets):**
-- The first annotated corpus of cross-language bugs in Java+TS and Python+Go systems.
-- An empirical taxonomy of failure modes when current SOTA agents are run on these bugs.
-- A research agenda for cross-language agent architectures grounded in the empirical findings.
-
-**Roadmap of the paper.**
+**Target venue:** FSE 2027 Research Papers track.
+**Deadline:** 2026-10-02.
+**Section budget:** ~4 pages of ~22 total.
 
 ---
 
-## 2. Background & Motivation (~0.5 page)
+## §3.1 Corpus Construction (~0.75 page)
 
-**Existing benchmarks treat languages independently.** Brief tour:
-- Multi-SWE-bench, SWE-PolyBench, xCodeEval, SWE-bench Pro.
-- All score per-language. None isolate boundary-crossing bugs.
+- Repo-mining methodology in one paragraph. Refer to reproducibility package for full detail.
+- **Figure or table:** repo counts + median stars + license distribution per language pair.
+- One line on the two filter calibrations logged during 1.1 (test-marker informational; python-go language fraction 2%) — these are *methodology decisions*, worth reporting for transparency.
 
-**Existing agents are single-language.** iSWE-Agent's 7 AST tools, AutoCodeRover's spectrum-based localization, MASAI's multi-agent design — all assume the bug lives in one language.
+## §3.2 Bug Extraction & Annotation (~0.5 page)
 
-**The gap is structural, not incremental.** Cite the 2026 "N-language Polyglot Programs" vision paper as theoretical framing.
+- PR filtering pipeline (both-language touch + bug-keyword heuristics).
+- Manual annotation protocol.
+- Inter-rater agreement statement — solo for first draft, κ on 30-bug subset once second annotator is available.
+- Total bugs annotated per language pair.
 
----
+## §3.3 Bug Taxonomy (~1 page)
 
-## 3. Empirical Study (~1.5 pages — the heart of the paper)
+- 6 categories with one-sentence definitions:
+  - `schema` — schema/contract mismatch
+  - `coerce` — type-coercion error at boundary
+  - `nil` — null/nil/undefined handling difference
+  - `serde` — serialization format drift
+  - `async` — async/sync impedance mismatch
+  - `other` — with mandatory rationale
+- **Figure 1:** stacked-bar count per category × language pair.
+- One representative example bug per category — 3–4 lines of prose each, anonymized if double-blind.
 
-### 3.1 Corpus
+## §3.4 Baseline Agent Performance (~1 page)
 
-- Mining methodology (one paragraph + reference to release).
-- Repo count per language pair, selection criteria, total bugs annotated.
-- One-line statement on annotation reliability.
+- Which agent(s) were run, on what subset, with what LLM.
+- Headline number: resolution rate on cross-language subset vs the agent's published single-language number.
+- **Figure 2:** bar chart showing this gap.
+- Cost per bug + wall time — reviewers will ask.
 
-### 3.2 Taxonomy
+## §3.5 Failure-Mode Analysis (~0.75 page — THE HEADLINE)
 
-- 6 categories with one-sentence definition each.
-- **Figure 1:** Bug-count distribution per category, per language pair.
-- One representative example per category — short, anonymized if needed.
-
-### 3.3 Baseline Agent Performance
-
-- Which agent was run, on what subset, with what LLM and config.
-- Headline number: resolution rate on cross-language subset vs. that agent's published single-language number.
-- **Figure 2:** Bar chart of these numbers.
-
-### 3.4 Failure Modes
-
-- **Table 1:** Per failure-mode counts (localization, cross-language-blind, patch-quality, test-execution, other).
-- 2–3 case studies of cross-language-blind failures — these are the paper's headline finding.
-- Brief discussion: where existing AST tools stop, and why.
-
----
-
-## 4. Research Agenda (~0.75 page)
-
-Translate the failure modes into design requirements:
-
-- **Unified cross-language call graph.** A localization tool must follow call chains across REST and gRPC boundaries.
-- **Schema-aware reasoning.** Contracts (`.proto`, OpenAPI) are first-class debugging context, not just metadata.
-- **Multi-language patch validation.** Patches must compile and pass tests on both sides of the boundary atomically.
-- **Failure-aware routing.** When localization confidence is low at a boundary, generate hypotheses that span both languages.
-
-Each bullet maps to a planned contribution in the full system (Phase C).
+- **Table 1:** counts per failure mode (localization / cross-language-blind / patch-quality / test-execution / other).
+- 2–3 case-study bugs demonstrating "cross-language-blind" — where the agent finds files in one language but never crosses the REST/gRPC boundary. **These are the paper's smoking gun.**
+- Brief prose: what specifically stops current single-language AST tools at the boundary.
+- Transitions to §4 (our cross-language call graph) — "this failure mode motivates the graph structure we present next."
 
 ---
 
-## 5. Threats to Validity (~0.25 page)
+## References anchored in this section
 
-- **Mining bias.** ≥500-star, English-language repos over-represent certain ecosystems.
-- **Annotator subjectivity.** Categories overlap on boundary cases; describe how we resolved them.
-- **Single-annotator κ.** Note if a secondary annotator was unavailable for the workshop draft; commit to it for Phase B.
-- **Agent / model version drift.** The baseline numbers are tied to specific commits + LLM versions.
-- **Selection of one agent.** A second agent (Phase B) is needed to claim findings generalize.
-
----
-
-## 6. Conclusion & Future Work (~0.25 page)
-
-- One-sentence summary of the gap and our contribution.
-- Pointer to (a) the dataset release and (b) the planned tool work for the full paper.
-
----
-
-## References
-
-Target: 20–30 references including:
 - Multi-SWE-bench, SWE-PolyBench, xCodeEval, SWE-bench Pro
-- iSWE-Agent (IBM blog + README), AutoCodeRover, MASAI, SWE-agent
-- LANTERN
-- PyXray, N-language Polyglot Programs vision paper
-- Cai et al. cross-language bug study (FSE 2025)
-- SCIP / Sourcegraph code intelligence references
-- Pact / contract-testing reference
+- iSWE-Agent (IBM blog + Multi-SWE-bench README), MASAI, SWE-agent
+- Cai et al. FSE 2025 cross-language bug study
+- PyXray ICSE 2026, N-language Polyglot Programs vision paper (2026)
 
 ---
 
-## Notes for the writer
+## Non-obvious writing notes
 
-- This is an **outline**, not the paper. Don't paste section bodies here. Write them in `sections/*.md` as data accumulates.
-- If a section's planned content disappears (e.g., we never get a baseline run done in time), shrink the outline and re-allocate pages — don't write filler.
-- The headline contribution is the **gap + failure-mode breakdown**. Everything else supports those two paragraphs.
+- **Frame the corpus-imbalance as a finding, not a limitation.** Python+Go monorepos are rare — this is itself worth reporting.
+- **The React Native sub-population** (Android JNI bridge, not REST) should either be excluded from the primary corpus or reported as a separate category. Decide when 1.2 is halfway done, based on how many RN bugs we're seeing.
+- **Don't lead with the tool.** §3 is empirical only. The tool starts in §4.
+- **Every number appears in `output/key-numbers.md`.** No exceptions.
+
+---
+
+## What this outline is NOT
+
+- Not the full FSE paper — this is §3 only. §1, §2, §8, §9 are written by the Week-12 sprint. §4–§7 are owned by Steps 2–4.
+- Not the workshop paper it was originally drafted as. That deliverable is dropped per [ROADMAP.md](../../../ROADMAP.md).

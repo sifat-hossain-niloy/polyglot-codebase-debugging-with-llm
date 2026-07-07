@@ -10,16 +10,22 @@ Full plan: [Polyglot_Debugging_Research_Progress_Report.md](Polyglot_Debugging_R
 
 ## Publication strategy
 
-We're delivering this **chunk by chunk**, not all at once:
+**Primary target: FSE 2027 Research Papers track. Deadline: 2026-10-02.**
 
-| Stage | Output | Timing |
-|------|--------|--------|
-| **Phase A** | Workshop short paper (NIER / ICSE workshop) + annotated bug dataset | Months 1–3 |
-| **Phase B** | Empirical/MSR paper on cross-language bug taxonomy | Months 3–6 |
-| **Phase C** | Conference paper (ICSE / FSE 2027) — full agent system + evaluation | Months 6–15 |
-| **Phase D** | Journal extension (TOSEM / TSE) | Post-conference |
+Single compressed submission with a graceful-degrade to an empirical-only paper if the tool work slips:
 
-See [ROADMAP.md](ROADMAP.md) for milestones and [STATUS.md](STATUS.md) for where we are right now.
+| Window | Weeks | Deliverable |
+|--------|-------|-------------|
+| 2026-07-01 → 2026-07-21 | 1–3 | Finish Step 1 (bug extraction + baselines) |
+| 2026-07-22 → 2026-08-11 | 4–6 | Step 2 (cross-language call graph) |
+| 2026-08-12 → 2026-09-01 | 7–9 | Step 3 (dual-agent system) |
+| 2026-09-02 → 2026-09-15 | 10–11 | Step 4 (evaluation + ablations + human eval) |
+| 2026-09-16 → 2026-09-29 | 12–13 | Paper writing sprint |
+| 2026-09-30 → 2026-10-02 | 14 | Polish + arXiv + submit |
+
+Post-FSE: journal extension (TOSEM / TSE) with additional languages and cross-session memory.
+
+See [ROADMAP.md](ROADMAP.md) for decision points and [STATUS.md](STATUS.md) for where we are right now.
 
 ## How to navigate this repo
 

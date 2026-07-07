@@ -8,7 +8,9 @@ PI: Fahim (fahim@cse.du.ac.bd).
 
 ## Current focus
 
-**Step 1 — Empirical Characterization** (Months 1–3 of the plan). Goal: a workshop short paper + a public bug-taxonomy dataset. See [ROADMAP.md](ROADMAP.md) for the chunk-by-chunk publication path and [STATUS.md](STATUS.md) for what's done.
+**Target: FSE 2027 Research Papers, deadline 2026-10-02.** 14-week compressed schedule from 2026-06-27. **Step 1 — Empirical Characterization** must complete by end of Week 3 (2026-07-21). See [ROADMAP.md](ROADMAP.md) for the week-by-week plan and decision points, and [STATUS.md](STATUS.md) for where we are right now.
+
+Do NOT default to the earlier workshop-first plan. That path is dropped; the workshop-paper outline now lives inside the FSE paper's §3 (Empirical Study).
 
 ## How work is organized
 

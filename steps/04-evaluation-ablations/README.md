@@ -1,8 +1,10 @@
 # Step 4 — Evaluation & Ablations (placeholder)
 
 **Maps to:** §3.3 Step 4 of the [research plan](../../Polyglot_Debugging_Research_Progress_Report.md).
-**Timeline:** Months 9–12.
+**Timeline (compressed for FSE 2027):** Weeks 10–11 of the 14-week schedule → **2026-09-02 to 2026-09-15**. Followed by paper writing sprint in Weeks 12–13 (2026-09-16 to 2026-09-29).
 **Status:** 🔴 Blocked on Step 3 — do not start until the dual-agent system from Step 3 runs end-to-end.
+
+> **Scope note under time pressure:** two weeks of evaluation is tight. Prioritize (a) resolution rate on Step 1 corpus, (b) RQ1 + RQ2 ablations, (c) human eval on 30 patches (rather than 50) with 3 evaluators (rather than 10). Everything else can wait for a journal extension.
 
 ## What this step will contain (preview)
 

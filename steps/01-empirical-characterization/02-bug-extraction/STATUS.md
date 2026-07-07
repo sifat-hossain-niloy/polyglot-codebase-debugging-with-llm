@@ -1,16 +1,17 @@
 # Status: Sub-step 1.2 — Bug Extraction & Annotation
 
-**Last updated:** 2026-06-23
+**Last updated:** 2026-06-27
 **Owner:** unassigned
-**State:** 🔴 Blocked on 01-github-mining
+**State:** ⚪ Unblocked — ready to start
+**Milestone:** ≥100 annotated bugs by 2026-07-21 (end of Week 3 in the FSE 2027 schedule)
 
 ## What's done
 
-Nothing yet. Cannot start until [01-github-mining](../01-github-mining/STATUS.md) produces `repos.jsonl`.
+Nothing yet. 1.1 is complete; `../01-github-mining/data/processed/repos.jsonl` has 145 repos ready to mine.
 
 ## What's next
 
-When unblocked, follow [CLAUDE.md](CLAUDE.md) "Concrete first session" steps 1–7.
+Follow [CLAUDE.md](CLAUDE.md) "Concrete first session" steps 1–7. First action: write `scripts/fetch_prs.py`.
 
 ## Open questions
 

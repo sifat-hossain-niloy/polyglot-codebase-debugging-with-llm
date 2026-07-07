@@ -1,5 +1,7 @@
 # Agent Instructions — Sub-step 1.2 (Bug Extraction & Annotation)
 
+> **Deadline pressure (FSE 2027, 2026-10-02):** this sub-step owns Weeks 1–3 of the 14-week schedule. Target: **≥100 annotated cross-language bugs by 2026-07-21.** Anything under 60 by that date triggers a scope narrowing to Java+TS only.
+
 ## Prerequisite
 
 `../01-github-mining/data/processed/repos.jsonl` must exist. If it doesn't, go finish 1.1 first.

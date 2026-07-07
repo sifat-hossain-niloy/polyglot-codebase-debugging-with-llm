@@ -1,8 +1,10 @@
 # Step 2 — Cross-Language Call Graph & Schema Integration (placeholder)
 
 **Maps to:** §3.3 Step 2 of the [research plan](../../Polyglot_Debugging_Research_Progress_Report.md).
-**Timeline:** Months 4–7.
+**Timeline (compressed for FSE 2027):** Weeks 4–6 of the 14-week schedule → **2026-07-22 to 2026-08-11**.
 **Status:** 🔴 Blocked on Step 1 — do not start until Step 1's annotated bug corpus exists.
+
+> **Scope note under time pressure:** the full research plan calls for both Java+TS and Python+Go cross-language graphs. Given the FSE 2027 deadline (2026-10-02), prioritize **Java+TS end-to-end** first. Python+Go graph is stretch — feasible if Java+TS lands cleanly in Week 4–5.
 
 ## What this step will contain (preview)
 

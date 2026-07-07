@@ -1,25 +1,29 @@
-# Status: Sub-step 1.4 — Workshop Paper
+# Status: Sub-step 1.4 — FSE Paper §3 Empirical-Study Skeleton
 
-**Last updated:** 2026-06-23
+**Last updated:** 2026-06-27
 **Owner:** unassigned
-**State:** ⚪ Not started (outline written; ready to skeleton)
+**State:** ⚪ Not started (scope changed 2026-06-27; outline exists)
+**Deadline:** 2026-10-02 (full FSE paper submission)
 
 ## What's done
 
-- Outline written: [outline.md](outline.md).
+- Outline rewritten for FSE §3 scope: [outline.md](outline.md).
+- README and CLAUDE.md updated to reflect that this sub-step now owns §3 of the FSE paper (not a standalone workshop paper).
 
 ## What's next
 
-1. Pick the exact venue (NIER vs workshop) — check deadlines.
-2. Set up `sections/` skeleton (one MD per section).
-3. Start writing the methodology and background as soon as sub-step 1.1 produces real numbers.
+1. Confirm the FSE 2027 CfP: page limit, double-blind rules, artifact-badge deadlines. Record here.
+2. Create `sections/` directory. Draft `sections/03-empirical-study.md` skeleton with headers from outline.
+3. Write the corpus/methodology paragraph now — 1.1 numbers are already available in `../01-github-mining/output/repo-summary.md`.
+4. As 1.2 lands annotations, add taxonomy prevalence and example bugs.
+5. As 1.3 lands baseline runs, add the failure-mode analysis.
 
 ## Open questions
 
-- **Single column vs double column template.** Depends on venue. Decide before writing layouts.
-- **Page-limit treatment of figures.** Some venues count figure space toward the 4-page limit, some don't. Verify per venue.
-- **Author list.** Just the user, or co-authors? Decide before drafting.
+- **Double-blind or not.** Depends on FSE 2027 CfP. Affects whether we anonymize repo names in the draft.
+- **Page-budget check.** Is ~4 pages really enough for §3? Might need to negotiate with §5/§6 later. Not a decision for today.
+- **RN sub-population.** Report separately as a "boundary_kind = ffi" category, or exclude from primary corpus? Decide once 1.2 has annotated ~20 RN-repo PRs.
 
 ## Artifacts produced
 
-- `outline.md` — the section structure and content plan.
+- `outline.md` — the §3 section structure.

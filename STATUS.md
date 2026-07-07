@@ -1,9 +1,11 @@
 # Global Status
 
 **Last updated:** 2026-06-27
-**Active phase:** Phase A (Workshop Paper + Dataset)
+**Target:** FSE 2027 Research Papers track. **Deadline: 2026-10-02 (14 weeks from today).**
 **Active step:** [Step 1 — Empirical Characterization](steps/01-empirical-characterization/STATUS.md)
 **Active sub-step:** [02-bug-extraction](steps/01-empirical-characterization/02-bug-extraction/STATUS.md)
+
+> **Plan change (2026-06-27):** switched from a chunk-by-chunk workshop→conference plan to a single FSE 2027 submission. The workshop-paper deliverable is dropped; its outline folds into the FSE paper's §3 (Empirical Study). See [ROADMAP.md](ROADMAP.md) for the 14-week schedule and [docs/publication-strategy.md](docs/publication-strategy.md) for the graceful-degrade to an empirical-only paper if Steps 2–4 slip.
 
 ## At a glance
 

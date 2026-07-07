@@ -1,8 +1,10 @@
 # Step 3 — Dual-Agent Debugging System (placeholder)
 
 **Maps to:** §3.3 Step 3 of the [research plan](../../Polyglot_Debugging_Research_Progress_Report.md).
-**Timeline:** Months 5–9.
+**Timeline (compressed for FSE 2027):** Weeks 7–9 of the 14-week schedule → **2026-08-12 to 2026-09-01**.
 **Status:** 🔴 Blocked on Step 2 — do not start until the cross-language call graph from Step 2 is available.
+
+> **Scope note under time pressure:** three weeks to a working end-to-end agent is aggressive. Prioritize (a) cross-language Localization agent + (b) minimal Editing agent. Skip inference-scaling / LLM-as-judge tournament — leave those as future work.
 
 ## What this step will contain (preview)
 

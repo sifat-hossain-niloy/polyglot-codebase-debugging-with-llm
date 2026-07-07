@@ -1,113 +1,99 @@
 # Publication Strategy
 
-Chunk-by-chunk plan to convert this research into a sequence of accepted publications rather than betting everything on a single conference submission. Source: ROADMAP.md, §4 of the research plan.
+**Primary target: FSE 2027 Research Papers track. Deadline: 2026-10-02.**
 
-## Why incremental?
+This document replaces the earlier phased workshop→empirical→conference plan. We are compressing to a single FSE submission, with a graceful-degrade to an empirical-only paper if the tool work slips.
 
-- **Risk reduction.** If iSWE-Agent's full paper comes out mid-2026, we still have a workshop paper banked.
-- **Feedback loop.** Workshop reviews and MSR data-paper reviews sharpen the conference submission.
-- **Public artifacts.** Each phase releases a dataset or short paper that builds citation momentum.
+## Why a single-shot strategy?
 
-## Phases mapped to artifacts
+- The FSE 2027 deadline gives us 14 weeks from 2026-06-27. That's enough for one strong submission, not three sequential ones.
+- Sequential workshop/empirical papers would consume writing time we need for the FSE draft.
+- FSE is the same tier as ICSE — a single accepted paper here is worth more than three intermediate workshop papers.
 
-| Phase | Months | Active step(s) | Artifact | Venue |
-|-------|--------|----------------|----------|-------|
-| A | 1–3 | Step 1 | 4-page short paper + Zenodo dataset (v1) | ICSE NIER / workshop |
-| B | 3–6 | Step 1 (extended) | Full empirical paper + dataset (v2) | MSR or ICSE empirical track |
-| C | 6–15 | Steps 2–4 | Full system + evaluation paper | ICSE / FSE 2027 |
-| D | post-C | extensions | Journal extension | TOSEM / TSE |
+## What we're submitting
 
-## Phase A — workshop paper
+**Working title:** *Cross-Language Localize-then-Edit: An Agentic Debugging System for Java+TypeScript and Python+Go Polyglot Codebases*
 
-### Hard requirements before submission
+**Track:** Research Papers (full, up to 22 pages including references).
 
-- Mined repo corpus exists and is reproducible (`scripts/` + `data/processed/`).
-- ≥100 cross-language bugs annotated, with at least one secondary annotator on a 30-bug subset for κ.
-- Baseline numbers: at least one of (iSWE-Agent / MASAI / SWE-agent) executed end-to-end on ≥20 cross-language bugs from our corpus, with failure-mode breakdown.
-- Short paper draft reviewed once by the user.
+**Structure (approximate page budget):**
 
-### Positioning
+| Section | Pages | Content |
+|---------|-------|---------|
+| Introduction | 1.5 | The gap, our contribution, RQs |
+| Background & Related Work | 2 | Multi-lang benchmarks, iSWE-Agent, PyXray, LANTERN, N-language vision paper |
+| Empirical Study | 4 | Corpus (Step 1.1), taxonomy (Step 1.2), baseline failure modes (Step 1.3) |
+| Cross-Language Call Graph | 3 | SCIP + tree-sitter + REST/gRPC schema edges (Step 2) |
+| Dual-Agent System | 3 | Cross-language localizer + cross-language editor + execution feedback (Step 3) |
+| Evaluation | 4 | RQs 1–4 with ablations on SWE-PolyBench + our corpus (Step 4) |
+| Human Evaluation | 1 | 50 patches × 10 engineers → correctness/plausibility/completeness |
+| Threats to Validity | 0.5 | Mining bias, annotator subjectivity, agent version drift |
+| Discussion + Conclusion | 1 | Findings + future work |
+| References | ~2 | 40–60 refs |
 
-Lead with the **gap**: prior benchmarks (SWE-PolyBench, Multi-SWE-bench) test languages independently. No one has measured agent performance specifically on bugs that *require* cross-language reasoning. Our contribution is:
+## Hard requirements to submit
 
-1. The first cross-language-bug corpus for Java+TS and Python+Go.
-2. Empirical demonstration that current SOTA agents fail predictably at the boundary.
-3. A taxonomy of failure modes that defines the research agenda.
+**By 2026-09-29 (draft-complete day):**
 
-### Things to avoid
+- ≥100 annotated cross-language bugs, corpus schema-validated.
+- Cross-language call graph proof of concept working on ≥5 curated bug traces.
+- Dual-agent system runs end-to-end on the corpus; per-bug results captured.
+- Ablations demonstrating RQ1 and RQ2 (cross-language graph on/off; schema-awareness on/off).
+- At least one language-pair result strong enough to lead with — Java+TS is our primary target; Python+Go can be a secondary case study if it's weaker.
+- Human evaluation on 50 bugs completed. If we can't recruit 10 engineers, minimum viable is 3 evaluators × 30 bugs.
+- Reproducibility package: scripts, configs, model versions, prompt versions.
 
-- Don't promise the dual-agent system in the workshop paper. That's Phase C.
-- Don't over-claim the dataset size — 100 bugs is fine for a workshop short paper. The empirical paper (Phase B) is where size grows.
-- Don't run baseline agents at full scale yet — pick a representative subset to make Phase A's cost bounded.
+**By 2026-10-01:**
 
-## Phase B — empirical paper
+- Full-paper draft finalized.
+- arXiv preprint uploaded.
+- Data + code links live (private or public — decide close to submission).
+- Anonymization pass done (if FSE 2027 requires double-blind — check when CfP publishes).
 
-### What grows from Phase A
+## Graceful-degrade: empirical-only paper
 
-- Dataset to 200–400 bugs.
-- All 6 taxonomy categories populated with ≥15 examples each.
-- All three baseline agents run on the full corpus.
-- Statistical analysis: which taxonomy categories correlate with which agent-failure modes.
+If by 2026-09-15 the tool doesn't produce publishable-quality patches, we pivot the submission to:
 
-### Positioning
+**Backup title:** *An Empirical Characterization of Cross-Language Debugging Failure in Java+TypeScript and Python+Go Polyglot Systems*
 
-Phase A says "the problem exists." Phase B says "here is the structure of the problem, in detail, at scale."
+**Structure:**
+- Introduction: gap between single-lang and multi-lang benchmarks.
+- Corpus: 145 mined repos + 100+ annotated bugs (Step 1.1–1.2).
+- Taxonomy: 6-category classification with prevalence per language pair.
+- Baseline analysis: iSWE-Agent (and possibly MASAI, SWE-agent) run on the corpus; failure-mode breakdown.
+- Research agenda: what a cross-language agent needs, grounded in observed failure modes.
 
-### Hard requirements
+This paper is:
+- Fully doable in 14 weeks even with tool setbacks.
+- Independently valuable regardless of what happens with Steps 2–4.
+- Still an FSE Research Papers-track submission (it makes an empirical contribution + a research agenda).
 
-- Inter-rater reliability formally reported (κ ≥ 0.7 target).
-- A reproducibility package: scripts, configs, model versions, prompt versions.
-- A data statement (per ICSE/MSR norms): selection criteria, exclusions, demographic/representational notes on the GitHub population.
+**Implication for how we work weeks 1–3:** Step 1 must be paper-quality on its own. Not a stepping stone to the tool — a standalone contribution.
 
-## Phase C — conference paper
+## What survives from the earlier plan
 
-### What grows from Phases A and B
+- All research questions (RQ1–RQ4) exactly as written in `Polyglot_Debugging_Research_Progress_Report.md` §3.2.
+- Central hypothesis unchanged.
+- Selection criteria for repos and bugs unchanged.
+- Bug taxonomy unchanged.
+- Quality gates: schema validation, second-annotator κ, human patch evaluation.
 
-- The cross-language agent itself (Steps 2 and 3 of the plan).
-- Evaluation on SWE-PolyBench + Multi-SWE-bench Java + our annotated corpus.
-- Ablations isolating (a) cross-language graph and (b) schema-aware hypothesis generation.
-- Human eval of patch quality on 50 bugs.
+## What was in the earlier plan and is now dropped
 
-### Positioning
+- Workshop paper submission as a separate deliverable. The outline in `steps/01-empirical-characterization/04-workshop-paper/outline.md` is now the skeleton for the FSE paper's §3 (Empirical Study).
+- MSR intermediate paper. Dataset still gets a Zenodo DOI at FSE submission time.
+- Sequential Phase A / Phase B / Phase C separation. Everything runs in parallel with a single deadline.
 
-Two narrative options — pick when results are in:
+## Post-decision plan
 
-- **Tool-first narrative:** "We built a cross-language localize-then-edit agent. It beats single-language baselines by X% on cross-boundary bugs."
-- **Analysis-first narrative:** "We characterize *why* current agents fail at boundaries (Phases A/B), then show that addressing the specific failure modes (schema unawareness, missing cross-language graph) yields X% improvement."
+- **If FSE accepts:** camera-ready, then extend to TOSEM/TSE journal with additional languages + cross-session memory.
+- **If FSE rejects:** revise per reviews and re-submit to ICSE 2027 (usually next major deadline). The rejection reviews sharpen the paper.
+- **If we invoked the backup narrative and FSE accepts it:** tool work (Steps 2–4) becomes a follow-up ICSE 2028 submission with the empirical paper's results as anchor.
 
-The analysis-first narrative is stronger if the absolute resolution rate is moderate (10–25%, the §5.2 risk).
+## Venue-tracking checklist (do these in Week 1)
 
-### Hard requirements
-
-- Beats single-language baselines on cross-boundary bugs (RQ1).
-- Cross-language graph improves localization precision over single-language graphs (RQ2).
-- Either RQ4 (translate-to-repair for Python+Go) succeeds OR has a clean negative result with explanation.
-- Tool and data both open-sourced.
-
-## Phase D — journal extension
-
-Triggered after Phase C is accepted. Adds:
-
-- A third language pair or N-language case (per the 2026 "N-language Polyglot Programs" vision paper).
-- Cross-session memory experiments.
-- Broader human-eval cohort.
-
-## Workshop venue shortlist (Phase A)
-
-To check submission deadlines closer to draft time:
-
-- **ICSE 2027 NIER** — short, vision-friendly.
-- **AIware @ FSE/ICSE** — AI-for-software-engineering co-located.
-- **InteNSE** — international workshop on interpretable and trustworthy NL-driven SE.
-- **LLM4Code** — emerging focused workshop.
-- **MSR 2026 Mining Challenge** — data-paper track, fits the dataset release.
-
-## Risks specific to publication
-
-- **iSWE-Agent arXiv release.** Mitigated by Phase A's cross-language scope (orthogonal).
-- **Reviewer asks "where are the comparison numbers?"** — Phase A must have at least one full baseline run on cross-language bugs.
-- **Dataset license / GDPR concerns.** GitHub-mined PR content is generally fine, but PII in commit messages / linked issues is a risk. Review before public release.
-
-## Tracking
-
-When a paper deadline is set or a draft milestone is hit, log it in [ROADMAP.md](../ROADMAP.md) under "Decision points," not here. Keep this document about *strategy*; let ROADMAP carry the dates.
+- [ ] Confirm FSE 2027 Research Papers CfP text (page limit, double-blind rules, artifact-badge process).
+- [ ] Confirm submission system (HotCRP link).
+- [ ] Confirm exact deadline timezone (usually AoE — anywhere on earth).
+- [ ] Check if there is a Registered Reports track we should route through instead.
+- [ ] Note the artifact-evaluation deadline (usually ~4 weeks after paper deadline) — plan reproducibility package accordingly.

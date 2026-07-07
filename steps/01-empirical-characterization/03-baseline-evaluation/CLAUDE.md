@@ -1,5 +1,7 @@
 # Agent Instructions — Sub-step 1.3 (Baseline Agent Evaluation)
 
+> **Deadline pressure (FSE 2027, 2026-10-02):** this sub-step must complete by 2026-07-21 (end of Week 3) so the FSE paper's §3 has a baseline number to lead with. That's ~2 weeks after 1.2 kicks off.
+
 ## Prerequisite
 
 `../02-bug-extraction/data/processed/bugs.jsonl` must exist with at least 20 annotated bugs. If it doesn't, go finish 1.2 first.
@@ -8,10 +10,10 @@
 
 **Which agent first, and what budget?**
 
-Default plan (require user confirmation):
+Default plan (require user confirmation by end of Week 2, 2026-07-14):
 - Start with **iSWE-Agent** (Java + cross-language story is cleanest).
 - Smoke test on 3 bugs → confirm harness works.
-- Scale to 20 bugs for the workshop paper.
+- Scale to 20 bugs — enough for the FSE paper's §3.5 failure-mode analysis.
 - Estimate: per-bug cost should be confirmed against the agent's published numbers before scaling.
 
 Ask the user explicitly. Don't burn API budget unauthorized.

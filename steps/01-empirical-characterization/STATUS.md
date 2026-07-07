@@ -3,6 +3,9 @@
 **Last updated:** 2026-06-27
 **State:** 🟡 In progress (sub-step 1.1 complete; 1.2 ready to start)
 **Active sub-step:** [02-bug-extraction/](02-bug-extraction/STATUS.md)
+**Deadline:** Step 1 fully done by 2026-07-21 (end of Week 3 in the FSE 2027 schedule)
+
+> **Plan change 2026-06-27:** we now target FSE 2027 full paper by 2026-10-02, not the earlier workshop→conference chunked path. Step 1 remains the same in content but is compressed into 3 weeks. See [../../ROADMAP.md](../../ROADMAP.md).
 
 ## Sub-step states
 
